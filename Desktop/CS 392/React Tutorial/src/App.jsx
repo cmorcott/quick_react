@@ -1,43 +1,15 @@
-import { useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
 const App = () => {
-  const [count, setCount] = useState(0);
+  const today = new Date();
+  const day = today.toLocaleString([], {weekday: 'long'});
+  const date = today.toLocaleDateString([], {dateStyle: 'long'})
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button onClick={() => setCount(count => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test hot module replacement (HMR).
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div>
+      <h1>Courses for Fall 2022-2023</h1>
+      
+      <p>Today is {day}, {date}.</p>
+
+      <p>PSYCH 228 <br></br> LRN_SCI 301 <br></br> COMP_SCI 349 <br></br> COMP_SCI 392</p>
     </div>
   );
 };
