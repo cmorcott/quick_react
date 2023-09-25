@@ -9,7 +9,7 @@ const App = () => {
       
       <p>Today is {day}, {date}.</p>
 
-      <p>PSYCH 228 <br></br> LRN_SCI 301 <br></br> COMP_SCI 349 <br></br> COMP_SCI 392</p>
+      <p><b>PSYCH 228 <br></br> LRN_SCI 301 <br></br> COMP_SCI 349 <br></br> COMP_SCI 392</b></p>
     </div>
   );
 };
