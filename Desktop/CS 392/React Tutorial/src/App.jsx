@@ -1,15 +1,41 @@
+import Courses from './components/Courses';
+import Header from './components/Header';
+
+const schedule = {
+  title:"CS Course Schedule for 2023-2024",
+  courses:{
+    CS349: {
+      term: "Fall '23",
+      title: "CS 349",
+      description: "Machine Learning",
+      time: "MW 11:00-12:20"
+    },
+    CS392: {
+      term: "Fall '23",
+      title: "CS 392",
+      description: "Rapid Software Prototyping",
+      time: "MWF 3:00-3:50"
+    },
+    CS449: {
+      term: "Winter '24",
+      title: "CS 449",
+      description: "Deep Learning",
+      time: "TTh 12:00-1:20"
+    },
+    CS301: {
+      term: "Winter '24",
+      title: "CS 301",
+      description: "Introduction to Robotics",
+      time: "W 12:00-2:50"
+    }
+  }
+};
+
 const App = () => {
-  const today = new Date();
-  const day = today.toLocaleString([], {weekday: 'long'});
-  const date = today.toLocaleDateString([], {dateStyle: 'long'})
-
   return (
-    <div>
-      <h1>Courses for Fall 2022-2023</h1>
-      
-      <p>Today is {day}, {date}.</p>
-
-      <p><b>PSYCH 228 <br></br> LRN_SCI 301 <br></br> COMP_SCI 349 <br></br> COMP_SCI 392</b></p>
+    <div className="mainbody">
+      <Header header={schedule.title}></Header>
+      <Courses courseList={schedule.courses}></Courses>
     </div>
   );
 };

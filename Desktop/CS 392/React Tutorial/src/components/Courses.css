@@ -1,0 +1,13 @@
+.courseList {
+    display: grid;
+    grid-template-columns: repeat(2, 20rem);
+    gap: 4rem;
+    padding-left: auto;
+    padding-right: auto;
+}
+
+.courseList > * {
+    border: 1px solid black;
+    padding: 1rem;
+    box-sizing: border-box;
+}
