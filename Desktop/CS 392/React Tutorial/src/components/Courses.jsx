@@ -1,22 +1,24 @@
-import React from 'react'
-import './Courses.css'
+import React from 'react';
+import './Courses.css';
 
-const Courses = ({courseList}) => {
-    const courses = courseList
+const Courses = ({ courseList }) => {
     return (
         <div className="courseListContainer">
             <div className="courseList">
-            {Object.entries(courses).map(([key, value]) => (
-                    <tr>
-                        <td>{value.title}</td>
-                        <td>{value.description}</td>
-                        <td>{value.term}</td>
-                        <td>{value.time}</td>
-                    </tr>
+                {Object.entries(courseList).map(([key, value]) => (
+                    <div className='card m-1 p-2' key={key}>
+                        <div className='card-body'>
+                            <h5 className='card-title'>{value.title} : {value.description}</h5>
+                            <p className='card-text'>Term: {value.term}</p>
+                        </div>
+                        <div className='card-footer bg-white'>
+                            <p className='card-text'>Meets: {value.time}</p>
+                        </div>
+                    </div>
                 ))}
+            </div>
         </div>
-        </div>
-    )
+    );
 }
 
 export default Courses;

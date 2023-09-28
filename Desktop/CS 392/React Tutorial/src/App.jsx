@@ -1,8 +1,8 @@
 import Courses from './components/Courses';
 import Header from './components/Header';
-import './components/global.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import './components/global.css'
 
 const schedule = {
   title:"CS Course Schedule for 2018-2019",
