@@ -1,8 +1,11 @@
 import Courses from './components/Courses';
 import Header from './components/Header';
+import './components/global.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const schedule = {
-  title:"CS Course Schedule for 2023-2024",
+  title:"CS Course Schedule for 2018-2019",
   courses:{
     CS349: {
       term: "Fall '23",
@@ -33,7 +36,7 @@ const schedule = {
 
 const App = () => {
   return (
-    <div className="mainbody">
+    <div>
       <Header header={schedule.title}></Header>
       <Courses courseList={schedule.courses}></Courses>
     </div>

@@ -4,7 +4,7 @@ import './Courses.css'
 const Courses = ({courseList}) => {
     const courses = courseList
     return (
-        <div>
+        <div className="courseListContainer">
             <div className="courseList">
             {Object.entries(courses).map(([key, value]) => (
                     <tr>
