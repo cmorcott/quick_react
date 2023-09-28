@@ -8,11 +8,11 @@ const Courses = ({ courseList }) => {
                 {Object.entries(courseList).map(([key, value]) => (
                     <div className='card m-1 p-2' key={key}>
                         <div className='card-body'>
-                            <h5 className='card-title'>{value.title} : {value.description}</h5>
-                            <p className='card-text'>Term: {value.term}</p>
+                            <h5 className='card-title'>{value.term} CS {value.number}</h5>
+                            <p className='card-text'>Term: {value.title}</p>
                         </div>
                         <div className='card-footer bg-white'>
-                            <p className='card-text'>Meets: {value.time}</p>
+                            <p className='card-text'>Meets: {value.meets}</p>
                         </div>
                     </div>
                 ))}

@@ -1,8 +1,9 @@
 .topTitle {
     background-image: linear-gradient(to right, #30e3ca, #11999e);
     color: white;
-    padding: 15px;
+    padding: 15px 0;
     text-align: center;
+    margin: 0;
 }
 
 

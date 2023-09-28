@@ -3,44 +3,34 @@ import Header from './components/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './components/global.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useJsonQuery } from './utilities/fetch';
 
-const schedule = {
-  title:"CS Course Schedule for 2018-2019",
-  courses:{
-    CS349: {
-      term: "Fall '23",
-      title: "CS 349",
-      description: "Machine Learning",
-      time: "MW 11:00-12:20"
-    },
-    CS392: {
-      term: "Fall '23",
-      title: "CS 392",
-      description: "Rapid Software Prototyping",
-      time: "MWF 3:00-3:50"
-    },
-    CS449: {
-      term: "Winter '24",
-      title: "CS 449",
-      description: "Deep Learning",
-      time: "TTh 12:00-1:20"
-    },
-    CS301: {
-      term: "Winter '24",
-      title: "CS 301",
-      description: "Introduction to Robotics",
-      time: "W 12:00-2:50"
-    }
-  }
-};
 
-const App = () => {
-  return (
+const Main = () => {
+  const [data, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
+
+  if (error) return <h1>Error loading user data: {`${error}`}</h1>;
+  if (isLoading) return <h1>Loading user data...</h1>;
+  if (!data) return <h1>No user data found</h1>;
+
+
+  return(
     <div>
-      <Header header={schedule.title}></Header>
-      <Courses courseList={schedule.courses}></Courses>
+      <Header header={data.title}></Header>
+      <Courses courseList={data.courses}></Courses>
     </div>
-  );
-};
+  )
+}
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <div>
+      <Main />
+    </div>
+  </QueryClientProvider>
+);
 
 export default App;
