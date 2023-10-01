@@ -1,4 +1,3 @@
-import { useState } from "react";
 import './TermButtons.css';
 
 const terms = {
