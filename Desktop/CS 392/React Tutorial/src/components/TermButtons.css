@@ -1,0 +1,21 @@
+.termButtons{
+    text-align: center;
+    margin-top: 2%;
+}
+
+.btn-success {
+    background-color: turquoise;
+    border-color: turquoise;
+}
+
+.btn-success:hover, .btn-success:active {
+    background-color: darkturquoise;
+    border-color: darkturquoise;
+}
+
+.btn {
+    width: 150px;  /* Set the desired width */
+    display: inline-block;  /* Makes sure the width is applied */
+    text-align: center;  /* Center the text inside the button */
+}
+
