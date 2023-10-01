@@ -25,13 +25,12 @@ const TermSelector = ({selection, setSelection}) => (
   </div>
 );
 
-const TermButtons = () => {
-  const [selection, setSelection] = useState(() => Object.keys(terms)[0]);
-  return (
-    <div className="termButtons">
-      <TermSelector selection={selection} setSelection={setSelection} />
-    </div>
-  );
+const TermButtons = ({selection, setSelection}) => {
+    return (
+      <div className="termButtons">
+        <TermSelector selection={selection} setSelection={setSelection} />
+      </div>
+    );
 }
 
 export default TermButtons;
