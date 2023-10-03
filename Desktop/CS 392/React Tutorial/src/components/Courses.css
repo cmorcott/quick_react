@@ -19,3 +19,13 @@
     padding-left: 5%;
     padding-right: 5%;
 }
+
+.cartButton {
+    border: none;
+    background-color: turquoise;
+    color: white;
+}
+
+.cartButton:hover {
+    opacity: 1;
+}

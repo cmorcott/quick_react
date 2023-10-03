@@ -1,9 +1,10 @@
-import Courses from './components/Courses';
-import Header from './components/Header';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './components/global.css'
 import './components/TermButtons';
+import Courses from './components/Courses';
+import Header from './components/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useJsonQuery } from './utilities/fetch';
 import TermButtons from './components/TermButtons';

@@ -14,8 +14,8 @@
 }
 
 .btn {
-    width: 150px;  /* Set the desired width */
-    display: inline-block;  /* Makes sure the width is applied */
-    text-align: center;  /* Center the text inside the button */
+    width: 150px; 
+    display: inline-block; 
+    text-align: center; 
 }
 
