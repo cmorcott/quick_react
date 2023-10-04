@@ -1,11 +1,13 @@
 .modal {
     display: block;
     visibility: hidden;
+    overflow-y: auto;
+    background-color: rgba(169, 169, 169, 0.2);
   }
   
   .modal-show {
     visibility:visible;
-    background-color: rgba(169, 169, 169, 0.8);
+    background-color: rgba(169, 169, 169, 0.2);
     transition: opacity 0.2s linear; 
   } 
   
@@ -19,5 +21,22 @@
   }
   
   .modal-header {
-    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid gray;
+  }
+
+  .cartTitle{
+    font-size: 20px;
+    text-align: center;
+    flex: 1;
+  }
+
+  .cartCourses {
+    font-size: 12px;
+  }
+
+  .modal .modal-show{
+    background-color: rgba(169, 169, 169, 0.2);
   }

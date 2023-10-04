@@ -12,7 +12,7 @@ const ShoppingCart = ({ children, open, close }) => {
         <div className="modal-dialog" role="document">
             <div className="modal-content">
                 <div className="modal-header">
-                    <h1>My Schedule</h1>
+                    <h1 className="cartTitle">My Schedule</h1>
                     <button type="button" className="btn-close" aria-label="Close" onClick={close}>
                     </button>
                 </div>

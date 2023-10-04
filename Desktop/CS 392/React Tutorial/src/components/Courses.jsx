@@ -20,14 +20,27 @@ const Courses = ({ courseList }) => {
         });
     }
 
+
+
     return (
         <div>
             <div className="courseList">
                 <button onClick={() => {setOpen(!cartOpen); }} className="cartButton"> Open Shopping Cart</button>
                 <ShoppingCart open={cartOpen} close={closeModal}>
-                    {selected.length === 0 ? <div>No courses selected, click a course card to add it to the cart</div> : 
-                    selected.map(courseKey => <div key={courseKey}>{courseKey}</div>)}
+                    {selected.length === 0 ? 
+                        <div>No courses selected, click a course card to add it to the cart</div> :
+                        selected.filter(courseKey => courseList[courseKey]).map(courseKey => {
+                            const course = courseList[courseKey];
+                            return (
+                                <div key={courseKey} className="cartCourses">
+                                    CS {course.number}: {course.title}, meets: {course.meets}
+                                </div>
+                            );
+                        })
+                    }
                 </ShoppingCart>
+
+
             </div>
             <div className="courseListContainer">
                 <div className="courseList">
