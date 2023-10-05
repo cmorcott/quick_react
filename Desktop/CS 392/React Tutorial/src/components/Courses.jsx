@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 import ShoppingCart from './ShoppingCart';
 import './Courses.css';
+import { allTimeConflicts } from './Conflict'; // Import the function
 
 const Courses = ({ courseList }) => {
     const [selected, setSelected] = useState([]);
     const [cartOpen, setOpen] = useState(false);
+    const [conflictingCourses, setConflictingCourses] = useState([]);
 
     const toggleSelected = (key) => {
-        setSelected(
-            selected.includes(key)
-            ? selected.filter(x => x !== key)
-            : [...selected, key]
-        );
+        if (conflictingCourses.includes(key)) return; // Prevent selection if it's a conflicting course
+
+        if (selected.includes(key)) {
+            setSelected(selected.filter(x => x !== key));
+            // Remove conflicts related to the deselected course
+            const newConflicts = conflictingCourses.filter(conflictKey => !allTimeConflicts(courseList[key], [courseList[conflictKey]]));
+            setConflictingCourses(newConflicts);
+        } else {
+            setSelected([...selected, key]);
+            updateConflictingCourses(key);
+        }
     }
 
     const closeModal = () => {
@@ -20,7 +28,15 @@ const Courses = ({ courseList }) => {
         });
     }
 
-
+    const updateConflictingCourses = (selectedCourse) => {
+        const conflicts = Object.keys(courseList).filter(courseKey => 
+            courseKey !== selectedCourse && 
+            allTimeConflicts(courseList[selectedCourse], [courseList[courseKey]])
+        );
+        // Merge new conflicts with existing ones
+        const mergedConflicts = [...new Set([...conflictingCourses, ...conflicts])];
+        setConflictingCourses(mergedConflicts);
+    }
 
     return (
         <div>
@@ -39,14 +55,12 @@ const Courses = ({ courseList }) => {
                         })
                     }
                 </ShoppingCart>
-
-
             </div>
             <div className="courseListContainer">
                 <div className="courseList">
                     {Object.entries(courseList).map(([key, value]) => (
                         <div 
-                            className={`card m-1 p-2 ${selected.includes(key) ? 'selectedCourse' : ''}`} 
+                            className={`card m-1 p-2 ${selected.includes(key) ? 'selectedCourse' : ''} ${conflictingCourses.includes(key) ? 'conflictCourse' : ''}`} 
                             key={key} 
                             onClick={() => toggleSelected(key)}
                             style={selected.includes(key) ? {border: '2px solid red'} : {}}

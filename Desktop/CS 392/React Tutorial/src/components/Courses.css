@@ -29,3 +29,7 @@
 .cartButton:hover {
     opacity: 1;
 }
+
+.conflictCourse {
+    background-color: #ffe0e0; /* light red background */
+}
