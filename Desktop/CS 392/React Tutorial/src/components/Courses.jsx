@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import ShoppingCart from './ShoppingCart';
 import './Courses.css';
-import { allTimeConflicts } from './Conflict'; // Import the function
+import { allTimeConflicts } from './Conflict';
+import { Link } from 'react-router-dom';
+
 
 const Courses = ({ courseList }) => {
     const [selected, setSelected] = useState([]);
@@ -9,11 +11,10 @@ const Courses = ({ courseList }) => {
     const [conflictingCourses, setConflictingCourses] = useState([]);
 
     const toggleSelected = (key) => {
-        if (conflictingCourses.includes(key)) return; // Prevent selection if it's a conflicting course
+        if (conflictingCourses.includes(key)) return;
 
         if (selected.includes(key)) {
             setSelected(selected.filter(x => x !== key));
-            // Remove conflicts related to the deselected course
             const newConflicts = conflictingCourses.filter(conflictKey => !allTimeConflicts(courseList[key], [courseList[conflictKey]]));
             setConflictingCourses(newConflicts);
         } else {
@@ -33,7 +34,6 @@ const Courses = ({ courseList }) => {
             courseKey !== selectedCourse && 
             allTimeConflicts(courseList[selectedCourse], [courseList[courseKey]])
         );
-        // Merge new conflicts with existing ones
         const mergedConflicts = [...new Set([...conflictingCourses, ...conflicts])];
         setConflictingCourses(mergedConflicts);
     }
@@ -65,13 +65,16 @@ const Courses = ({ courseList }) => {
                             onClick={() => toggleSelected(key)}
                             style={selected.includes(key) ? {border: '2px solid red'} : {}}
                         >
-                            <div className='card-body'>
-                                <h5 className='card-title'>{value.term} CS {value.number}</h5>
-                                <p className='card-text'>Term: {value.title}</p>
-                            </div>
-                            <div className='card-footer bg-white'>
-                                <p className='card-text'>Meets: {value.meets}</p>
-                            </div>
+                        <div className='card-body'>
+                            <h5 className='card-title'>{value.term} CS {value.number}</h5>
+                            <p className='card-text'>Term: {value.title}</p>
+                        </div>
+                        <div className='card-footer bg-white'>
+                            <p className='card-text'>Meets: {value.meets}</p>
+                            <Link to={`/courseform/${key}|${value.term}|${value.number}|${value.title}|${value.meets}`}>
+                                <button className="btn btn-sm btn-outline-secondary">Edit</button>
+                            </Link>
+                        </div>
                         </div>
                     ))}
                 </div>

@@ -8,7 +8,9 @@ import Header from './components/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useJsonQuery } from './utilities/fetch';
 import TermButtons from './components/TermButtons';
+import CourseForm from './components/CourseForm';
 import { useState } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
 
@@ -31,8 +33,13 @@ const Main = () => {
   return(
     <div>
       <Header header={data.title}></Header>
-      <TermButtons selection={selection} setSelection={setSelection}></TermButtons>
-      <Courses courseList={Object.fromEntries(filteredCourses)}></Courses>
+      <TermButtons selection={selection} setSelection={setSelection} />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={ <Courses courseList={Object.fromEntries(filteredCourses)} /> } />
+          <Route path='courseform/:courseId' element={<CourseForm/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
