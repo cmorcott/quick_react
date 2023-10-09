@@ -3,13 +3,11 @@ import { useState } from 'react';
 
 const CourseForm = () => {
     const { courseId } = useParams();
-    const [term, number, title, meets] = courseId.split('|');
+    const [key, term, number, title, meets] = courseId.split('|');
 
     const [state, setState] = useState({
         values: {
             courseTitle: title,
-            courseNumber: number,
-            courseTerm: term,
             meetingTimes: meets
         },
         errors: {}
@@ -17,10 +15,10 @@ const CourseForm = () => {
 
     const validateUserData = (key, val) => {
         switch (key) {
-          case 'firstName': case 'lastName':
-            return /(^\w\w)/.test(val) ? '' : 'must be least two characters';
-          case 'email':
-            return /^\w+@\w+[.]\w+/.test(val) ? '' : 'must contain name@domain.top-level-domain';
+          case 'courseTitle':
+            return /(^\w\w)/.test(val) ? '' : 'Must be at least two characters, i.e. "AI"';
+          case 'meetingTimes':
+            return /^((M|Tu|W|Th|F)+[\s][0-9]{1,2}:[0-9]{2}-[0-9]{1,2}:[0-9]{2})$|^$/.test(val) ? '' : 'Must contain days and a start/end time, i.e. "MWF 14:00-14:50"';
           default: return '';
         }
     };
@@ -28,9 +26,8 @@ const CourseForm = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         const error = validateUserData(name, value);
-
+    
         setState(prevState => ({
-            ...prevState,
             values: {
                 ...prevState.values,
                 [name]: value
@@ -41,14 +38,24 @@ const CourseForm = () => {
             }
         }));
     };
+    
+    
 
     const InputField = ({name, text, state, change}) => (
         <div className="mb-3">
             <label htmlFor={name} className="form-label">{text}</label>
-            <input className="form-control" id={name} name={name} value={state.values?.[name] || ''} onChange={change} />
+            <input 
+                className={`form-control ${state.errors?.[name] ? 'is-invalid' : ''}`} 
+                id={name} 
+                name={name} 
+                defaultValue={state.values?.[name] || ''} 
+                onChange={change} 
+            />
             <div className="invalid-feedback">{state.errors?.[name]}</div>
         </div>
     );
+    
+    
 
     const ButtonBar = () => {
         return (
@@ -64,7 +71,7 @@ const CourseForm = () => {
     const submit = (evt) => {
         evt.preventDefault();
         if (!state.errors) {
-          // update(state.values); // Uncomment this when you have the update function ready
+          // update(state.values); // Uncomment this when update function ready
         }
     };
 
@@ -72,8 +79,6 @@ const CourseForm = () => {
         <form onSubmit={submit} className="p-4 bg-white" style={{borderRadius: '5px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
             <h1>Change Course Details</h1>
             <InputField name="courseTitle" text="Course Title" state={state} change={handleInputChange} />
-            <InputField name="courseNumber" text="Course Number" state={state} change={handleInputChange} />
-            <InputField name="courseTerm" text="Course Term" state={state} change={handleInputChange} />
             <InputField name="meetingTimes" text="Meeting Time(s)" state={state} change={handleInputChange} />
             <ButtonBar />
         </form>
