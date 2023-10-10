@@ -6,7 +6,7 @@ import './components/TermButtons';
 import Courses from './components/Courses';
 import Header from './components/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useJsonQuery } from './utilities/fetch';
+import { useDbData } from './utilities/firebase';
 import TermButtons from './components/TermButtons';
 import CourseForm from './components/CourseForm';
 import { useState } from 'react';
@@ -21,11 +21,10 @@ const terms = {
 };
 
 const Main = () => {
-  const [data, isLoading, error] = useJsonQuery('https://courses.cs.northwestern.edu/394/guides/data/cs-courses.php');
+  const [data, error] = useDbData('/')
   const [selection, setSelection] = useState(() => Object.keys(terms)[0])
 
   if (error) return <h1>Error loading user data: {`${error}`}</h1>;
-  if (isLoading) return <h1>Loading user data...</h1>;
   if (!data) return <h1>No user data found</h1>;
 
   const filteredCourses = Object.entries(data.courses).filter(([key, value]) => value.term == selection)

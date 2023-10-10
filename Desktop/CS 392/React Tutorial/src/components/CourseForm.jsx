@@ -71,7 +71,8 @@ const CourseForm = () => {
     const submit = (evt) => {
         evt.preventDefault();
         if (!state.errors) {
-          // update(state.values); // Uncomment this when update function ready
+          //update(state.values);
+          Navigate('/');
         }
     };
 
