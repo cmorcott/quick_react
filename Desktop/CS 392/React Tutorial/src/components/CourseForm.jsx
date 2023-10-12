@@ -1,23 +1,29 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState } from 'react';
+import { useDbUpdate } from "../utilities/firebase"
 
 const CourseForm = () => {
     const { courseId } = useParams();
     const [key, term, number, title, meets] = courseId.split('|');
+    const navigate = useNavigate();
+    const dbCourse = term[0].concat(String(number));
+    const [update, res] = useDbUpdate(`/courses/${dbCourse}`)
+
+
 
     const [state, setState] = useState({
         values: {
-            courseTitle: title,
-            meetingTimes: meets
+            title: title,
+            meets: meets
         },
         errors: {}
     });
 
     const validateUserData = (key, val) => {
         switch (key) {
-          case 'courseTitle':
+          case 'title':
             return /(^\w\w)/.test(val) ? '' : 'Must be at least two characters, i.e. "AI"';
-          case 'meetingTimes':
+          case 'meets':
             return /^((M|Tu|W|Th|F)+[\s][0-9]{1,2}:[0-9]{2}-[0-9]{1,2}:[0-9]{2})$|^$/.test(val) ? '' : 'Must contain days and a start/end time, i.e. "MWF 14:00-14:50"';
           default: return '';
         }
@@ -47,9 +53,9 @@ const CourseForm = () => {
             <input 
                 className={`form-control ${state.errors?.[name] ? 'is-invalid' : ''}`} 
                 id={name} 
-                name={name} 
-                defaultValue={state.values?.[name] || ''} 
-                onChange={change} 
+                name={name}
+                defaultValue = {state.values?.[name]}  
+                onChange={change}
             />
             <div className="invalid-feedback">{state.errors?.[name]}</div>
         </div>
@@ -57,31 +63,43 @@ const CourseForm = () => {
     
     
 
-    const ButtonBar = () => {
+    const ButtonBar = ({msg}) => {
         return (
           <div className="d-flex">
             <Link to='/'>
                 <button type="button" className="btn btn-outline-danger">Cancel</button>
             </Link>
-            <button type="submit" className="btn btn-primary mx-4" disabled>Submit</button>
+            <button type="submit" className="btn btn-primary mx-4">Submit</button>
+            <span className="p-2">{msg}</span>
           </div>
         );
     };
 
     const submit = (evt) => {
         evt.preventDefault();
-        if (!state.errors) {
-          //update(state.values);
-          Navigate('/');
+    
+        const hasErrors = Object.values(state.errors).some(error => error !== '');
+    
+        if (!hasErrors) {
+            try {
+                update(state.values);
+                navigate('/');
+            } catch (error) {
+                console.error("Error updating the database:", error);
+            }
+        } else {
+            console.log("Validation errors:", state.errors);
         }
     };
+    
+    
 
     return (
         <form onSubmit={submit} className="p-4 bg-white" style={{borderRadius: '5px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
             <h1>Change Course Details</h1>
-            <InputField name="courseTitle" text="Course Title" state={state} change={handleInputChange} />
-            <InputField name="meetingTimes" text="Meeting Time(s)" state={state} change={handleInputChange} />
-            <ButtonBar />
+            <InputField name="title" text="Course Title" state={state} change={handleInputChange} />
+            <InputField name="meets" text="Meeting Time(s)" state={state} change={handleInputChange} />
+            <ButtonBar msg= {res?.message} />
         </form>
     );
 };
