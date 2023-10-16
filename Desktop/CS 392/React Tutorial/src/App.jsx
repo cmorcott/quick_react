@@ -6,7 +6,7 @@ import './components/TermButtons';
 import Courses from './components/Courses';
 import Header from './components/Header';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useDbData } from './utilities/firebase';
+import { useDbData, useAuthState } from './utilities/firebase';
 import TermButtons from './components/TermButtons';
 import CourseForm from './components/CourseForm';
 import { useState } from 'react';
@@ -23,6 +23,7 @@ const terms = {
 const Main = () => {
   const [data, error] = useDbData('/')
   const [selection, setSelection] = useState(() => Object.keys(terms)[0])
+  const [user] = useAuthState();
 
   if (error) return <h1>Error loading user data: {`${error}`}</h1>;
   if (!data) return <h1>No user data found</h1>;

@@ -3,12 +3,14 @@ import ShoppingCart from './ShoppingCart';
 import './Courses.css';
 import { allTimeConflicts } from './Conflict';
 import { Link } from 'react-router-dom';
+import { useAuthState } from '../utilities/firebase';
 
 
 const Courses = ({ courseList }) => {
     const [selected, setSelected] = useState([]);
     const [cartOpen, setOpen] = useState(false);
     const [conflictingCourses, setConflictingCourses] = useState([]);
+    const [user] = useAuthState();
 
     const toggleSelected = (key) => {
         if (conflictingCourses.includes(key)) return;
@@ -72,7 +74,7 @@ const Courses = ({ courseList }) => {
                         <div className='card-footer bg-white'>
                             <p className='card-text'>Meets: {value.meets}</p>
                             <Link to={`/courseform/${key}|${value.term}|${value.number}|${value.title}|${value.meets}`}>
-                                <button className="btn btn-sm btn-outline-secondary">Edit</button>
+                                {user &&<button className="btn btn-sm btn-outline-secondary">Edit</button>}
                             </Link>
                         </div>
                         </div>
