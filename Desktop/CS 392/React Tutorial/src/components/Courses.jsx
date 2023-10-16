@@ -4,6 +4,7 @@ import './Courses.css';
 import { allTimeConflicts } from './Conflict';
 import { Link } from 'react-router-dom';
 import { useAuthState } from '../utilities/firebase';
+import { useProfile } from '../utilities/profile';
 
 
 const Courses = ({ courseList }) => {
@@ -11,6 +12,7 @@ const Courses = ({ courseList }) => {
     const [cartOpen, setOpen] = useState(false);
     const [conflictingCourses, setConflictingCourses] = useState([]);
     const [user] = useAuthState();
+    const [profile, profileLoading, profileError] = useProfile();
 
     const toggleSelected = (key) => {
         if (conflictingCourses.includes(key)) return;
@@ -74,7 +76,7 @@ const Courses = ({ courseList }) => {
                         <div className='card-footer bg-white'>
                             <p className='card-text'>Meets: {value.meets}</p>
                             <Link to={`/courseform/${key}|${value.term}|${value.number}|${value.title}|${value.meets}`}>
-                                {user &&<button className="btn btn-sm btn-outline-secondary">Edit</button>}
+                                {profile.isAdmin && user &&<button className="btn btn-sm btn-outline-secondary">Edit</button>}
                             </Link>
                         </div>
                         </div>
