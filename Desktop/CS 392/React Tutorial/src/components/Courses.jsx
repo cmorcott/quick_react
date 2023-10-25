@@ -68,6 +68,7 @@ const Courses = ({ courseList }) => {
                             key={key} 
                             onClick={() => toggleSelected(key)}
                             style={selected.includes(key) ? {border: '2px solid red'} : {}}
+                            data-cy="course"
                         >
                         <div className='card-body'>
                             <h5 className='card-title'>{value.term} CS {value.number}</h5>
